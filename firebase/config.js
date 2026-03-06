@@ -1,8 +1,14 @@
 const admin = require('firebase-admin');
 
-// Importante: Descargar el archivo JSON de la clave de servicio desde la consola de Firebase
-// (Configuración del proyecto -> Cuentas de servicio) y guardarlo en la raíz.
-const serviceAccount = require('../firebase-service-account.json');
+// Obtenemos las credenciales. Primero intenta leer si hay un JSON parseable en variable de entorno.
+// Si no, recurre al archivo (usando la ruta en FIREBASE_KEY_PATH si existe, o la por defecto local)
+let serviceAccount;
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  const keyPath = process.env.FIREBASE_KEY_PATH || '../firebase-service-account.json';
+  serviceAccount = require(keyPath);
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
