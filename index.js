@@ -23,9 +23,7 @@ app.get('/', (req, res) => {
   );
 });
 
-// ======================================
 // Obtener todas las sesiones
-// ======================================
 app.get('/sesiones', async (req, res) => {
     try {
         const snapshot = await sesionesRef.orderBy('fecha', 'asc').get();
@@ -43,9 +41,7 @@ app.get('/sesiones', async (req, res) => {
     }
 });
 
-// ======================================
 // Obtener la última sesión
-// ======================================
 app.get('/sesion', async (req, res) => {
     try {
         const snapshot = await sesionesRef.orderBy('fecha', 'desc').limit(1).get();
@@ -63,9 +59,7 @@ app.get('/sesion', async (req, res) => {
     }
 });
 
-// ======================================
 // Insertar nueva sesión
-// ======================================
 app.post('/insertar', async (req, res) => {
     try {
         const nuevaSesion = {
